@@ -36,3 +36,4 @@ docker-compose.override.dev.yml
 
 # 📦 Ignore les builds et caches
 /public/build/
+public/bundles/
