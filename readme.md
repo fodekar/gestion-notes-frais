@@ -35,11 +35,8 @@ cd gestion-notes-frais
 ```
 
 ### 2️⃣ Configuration des Variables d'Environnement
-Copie le fichier .env.example et renomme-le en .env :
+"Copiez le fichier .env.example et renommez-le en .env, puis remplissez les valeurs sensibles."
 
-```sh
-cp .env.example .env
-```
 🔧 Modifie le fichier .env pour adapter la configuration de la base de données si nécessaire.
 
 ### 3️⃣ Démarrer les Conteneurs Docker
