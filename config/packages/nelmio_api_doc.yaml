@@ -1,0 +1,15 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: "API de gestion des notes de frais"
+            description: "Documentation de l'API avec Swagger et Nelmio"
+            version: "1.0.0"
+        components:
+            securitySchemes:
+                bearerAuth:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+    areas:
+        path_patterns: # Applique Swagger uniquement aux routes API
+            - ^/api

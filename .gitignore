@@ -1,0 +1,38 @@
+# 🚀 Fichiers d'environnement (⚠️ Contiennent des secrets)
+.env
+.env.local
+.env.dev
+.env.test
+.env.*.local
+
+# 🚀 Ignore les fichiers de cache et logs Symfony
+/var/
+/vendor/
+/config/secrets/prod/prod.decrypt.private.php
+
+# 🚫 Clés JWT (⚠️ Sécurité importante)
+config/jwt/*.pem
+config/jwt/passphrase
+
+# 🚀 Ignore les fichiers temporaires de Composer et Symfony
+composer.lock
+symfony.lock
+
+# 🚀 Ignore les fichiers PHPUnit (sauf si nécessaire)
+.phpunit.result.cache
+phpunit.xml
+phpunit.xml.dist
+/.phpunit.cache/
+
+# 🚀 Ignore les fichiers Docker temporaires
+docker-compose.override.yml
+docker-compose.override.dev.yml
+
+# 🔧 Ignore les fichiers d'IDE (VS Code, PHPStorm, etc.)
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# 📦 Ignore les builds et caches
+/public/build/
