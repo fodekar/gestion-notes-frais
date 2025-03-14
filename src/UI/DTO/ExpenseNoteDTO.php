@@ -18,13 +18,13 @@ class ExpenseNoteDTO
 
     public function __construct(ExpenseNote $expenseNote)
     {
-        $this->id = (string) $expenseNote->getId();
+        $this->id = (string)$expenseNote->getId();
         $this->date = $expenseNote->getDate()->format('Y-m-d');
         $this->amount = $expenseNote->getAmount();
         $this->type = $expenseNote->getType();
         $this->createdAt = $expenseNote->getCreatedAt()->format('Y-m-d H:i:s');
-        $this->userId = (string) $expenseNote->getUser()->getId();
-        $this->companyId = (string) $expenseNote->getCompany()->getId();
+        $this->userId = (string)$expenseNote->getUser()->getId();
+        $this->companyId = (string)$expenseNote->getCompany()->getId();
     }
 
     public static function fromEntity(ExpenseNote $expenseNote): self

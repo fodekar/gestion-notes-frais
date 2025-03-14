@@ -52,7 +52,7 @@ class Company
         $this->name = $name;
     }
 
-    // ✅ **Gestion de la relation avec User**
+    // **Gestion de la relation avec User**
     public function getUsers(): Collection
     {
         return $this->users;

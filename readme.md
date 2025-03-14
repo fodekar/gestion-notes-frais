@@ -135,6 +135,32 @@ Une fois le serveur démarré, tu peux tester l'API avec Postman.
 ```
 👉 Cela retourne un token JWT à utiliser pour les autres requêtes.
 📌 Lister les notes de frais (GET /api/expenses) par exemple.
+👉 Remplacez {id} par l'UUID de la note de frais à récupérer.
+👉 Token JWT requis.
+
+📌 Créer une note de frais (POST /api/expenses)
+```json
+{
+    "companyId": "94eca325-5f1a-4a7c-89f4-ca22102ce624",
+    "date": "2024-03-12",
+    "amount": 75.50,
+    "type": "meal"
+}
+```
+
+📌 Modifier une note de frais (PUT /api/expenses/{id})
+```json
+{
+    "companyId": "94eca325-5f1a-4a7c-89f4-ca22102ce624",
+    "date": "2024-03-12",
+    "amount": 75.50,
+    "type": "meal"
+}
+```
+
+📌 Supprimer une note de frais (DELETE /api/expenses/{id})
+👉 Remplacez {id} par l'UUID de la note de frais à supprimer.
+
 
 ### 8️⃣ Exécuter les Tests Automatisés
 Notre projet contient des tests fonctionnels et unitaires pour garantir son bon fonctionnement.

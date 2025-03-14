@@ -32,7 +32,7 @@ class CreateExpenseRequest
         $this->userId = $data['userId'] ?? null;
         $this->companyId = $data['companyId'] ?? null;
         $this->date = $data['date'] ?? null;
-        $this->amount = isset($data['amount']) ? (float) $data['amount'] : null;
+        $this->amount = isset($data['amount']) ? (float)$data['amount'] : null;
         $this->type = $data['type'] ?? null;
     }
 }

@@ -22,7 +22,7 @@ class UpdateExpenseRequest
     public function __construct(array $data)
     {
         $this->date = $data['date'] ?? null;
-        $this->amount = isset($data['amount']) ? (float) $data['amount'] : null;
+        $this->amount = isset($data['amount']) ? (float)$data['amount'] : null;
         $this->type = $data['type'] ?? null;
     }
 }

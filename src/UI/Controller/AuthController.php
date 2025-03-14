@@ -51,7 +51,8 @@ class AuthController extends AbstractController
         Request                     $request,
         EntityManagerInterface      $entityManager,
         UserPasswordHasherInterface $passwordHasher
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $data = json_decode($request->getContent(), true);
 
         // Vérifier la présence de tous les champs obligatoires

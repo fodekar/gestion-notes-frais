@@ -5,7 +5,6 @@ namespace App\UI\Controller;
 use App\Application\Service\ExpenseNoteService;
 use App\Domain\Entity\User;
 use App\UI\DTO\ExpenseNoteDTO;
-use App\UI\Request\CreateExpenseRequest;
 use App\UI\Request\UpdateExpenseRequest;
 use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
@@ -21,7 +20,7 @@ use OpenApi\Annotations as OA;
 class ExpenseNoteController extends AbstractController
 {
     private ExpenseNoteService $expenseNoteService;
-    private Security $security; // 🔹 Injection de Security pour récupérer l'utilisateur connecté
+    private Security $security; // Injection de Security pour récupérer l'utilisateur connecté
 
     public function __construct(ExpenseNoteService $expenseNoteService, Security $security)
     {

@@ -44,21 +44,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: "users_companies")]
     private Collection $companies;
 
-    // ✅ **Constructeur vide pour Doctrine**
+    // **Constructeur vide pour Doctrine**
     public function __construct()
     {
         $this->companies = new ArrayCollection();
     }
 
-    // ✅ **Méthode d'initialisation complète**
+    // **Méthode d'initialisation complète**
     public function initialize(
-        string $firstName,
-        string $lastName,
-        string $email,
+        string            $firstName,
+        string            $lastName,
+        string            $email,
         DateTimeImmutable $birthDate,
-        string $password,
-        array $roles = ['ROLE_USER']
-    ): self {
+        string            $password,
+        array             $roles = ['ROLE_USER']
+    ): self
+    {
         $this->id = Uuid::uuid4(); // Génération d'UUID
         $this->firstName = $firstName;
         $this->lastName = $lastName;
@@ -71,21 +72,61 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getId(): ?UuidInterface { return $this->id; }
-    public function getFirstName(): string { return $this->firstName; }
-    public function getLastName(): string { return $this->lastName; }
-    public function getEmail(): string { return $this->email; }
-    public function getBirthDate(): DateTimeImmutable { return $this->birthDate; }
-    public function getPassword(): string { return $this->password; }
-    public function getRoles(): array { return $this->roles; }
+    public function getId(): ?UuidInterface
+    {
+        return $this->id;
+    }
 
-    public function eraseCredentials(): void {}
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
 
-    public function setPassword(string $password): void { $this->password = $password; }
-    public function setRoles(array $roles): void { $this->roles = $roles; }
-    public function setEmail(string $email): void { $this->email = $email; }
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
 
-    // ✅ **Gestion de la relation ManyToMany avec `Company`**
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getBirthDate(): DateTimeImmutable
+    {
+        return $this->birthDate;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function eraseCredentials(): void
+    {
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    // **Gestion de la relation ManyToMany avec `Company`**
     public function getCompanies(): Collection
     {
         return $this->companies;
@@ -107,5 +148,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Nouvelle méthode requise par UserInterface depuis Symfony 5.3
      * Retourne l’identifiant unique de l’utilisateur (l’email ici)
      */
-    public function getUserIdentifier(): string { return $this->email; }
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
 }

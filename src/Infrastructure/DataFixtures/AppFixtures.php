@@ -22,72 +22,72 @@ class AppFixtures extends Fixture
     }
 
     public function load(ObjectManager $manager): void
-{
-    // 🔹 Création de deux utilisateurs
-    $user1 = (new User())->initialize(
-        "John",
-        "Doe",
-        "john.doe@example.com",
-        new DateTimeImmutable('1990-01-01'),
-        $this->passwordHasher->hashPassword(new User(), 'securepassword'),
-        ['ROLE_USER']
-    );
+    {
+        // 🔹 Création de deux utilisateurs
+        $user1 = (new User())->initialize(
+            "John",
+            "Doe",
+            "john.doe@example.com",
+            new DateTimeImmutable('1990-01-01'),
+            $this->passwordHasher->hashPassword(new User(), 'securepassword'),
+            ['ROLE_USER']
+        );
 
-    $user2 = (new User())->initialize(
-        "Jane",
-        "Doe",
-        "jane.doe@example.com",
-        new DateTimeImmutable('1992-06-15'),
-        $this->passwordHasher->hashPassword(new User(), 'securepassword'),
-        ['ROLE_USER']
-    );
+        $user2 = (new User())->initialize(
+            "Jane",
+            "Doe",
+            "jane.doe@example.com",
+            new DateTimeImmutable('1992-06-15'),
+            $this->passwordHasher->hashPassword(new User(), 'securepassword'),
+            ['ROLE_USER']
+        );
 
-    $manager->persist($user1);
-    $manager->persist($user2);
+        $manager->persist($user1);
+        $manager->persist($user2);
 
-    // 🔹 Création de plusieurs sociétés
-    $company1 = new Company("Tech Corp");
-    $company2 = new Company("Biz Solutions");
+        // 🔹 Création de plusieurs sociétés
+        $company1 = new Company("Tech Corp");
+        $company2 = new Company("Biz Solutions");
 
-    $manager->persist($company1);
-    $manager->persist($company2);
+        $manager->persist($company1);
+        $manager->persist($company2);
 
-    // 🔹 Associer les entreprises aux utilisateurs
-    $user1->addCompany($company1);
-    $user1->addCompany($company2);
+        // 🔹 Associer les entreprises aux utilisateurs
+        $user1->addCompany($company1);
+        $user1->addCompany($company2);
 
-    $user2->addCompany($company2); // Jane n'a accès qu'à une seule entreprise
+        $user2->addCompany($company2); // Jane n'a accès qu'à une seule entreprise
 
-    // 🔹 Création de notes de frais pour chaque utilisateur
-    $expense1 = new ExpenseNote(
-        new DateTimeImmutable(),
-        new Amount(75.50),
-        new ExpenseType('meal'),
-        $user1,
-        $company1
-    );
+        // 🔹 Création de notes de frais pour chaque utilisateur
+        $expense1 = new ExpenseNote(
+            new DateTimeImmutable(),
+            new Amount(75.50),
+            new ExpenseType('meal'),
+            $user1,
+            $company1
+        );
 
-    $expense2 = new ExpenseNote(
-        new DateTimeImmutable(),
-        new Amount(30.00),
-        new ExpenseType('fuel'),
-        $user1,
-        $company2
-    );
+        $expense2 = new ExpenseNote(
+            new DateTimeImmutable(),
+            new Amount(30.00),
+            new ExpenseType('fuel'),
+            $user1,
+            $company2
+        );
 
-    $expense3 = new ExpenseNote(
-        new DateTimeImmutable(),
-        new Amount(50.00),
-        new ExpenseType('toll'),
-        $user2,
-        $company2
-    );
+        $expense3 = new ExpenseNote(
+            new DateTimeImmutable(),
+            new Amount(50.00),
+            new ExpenseType('toll'),
+            $user2,
+            $company2
+        );
 
-    $manager->persist($expense1);
-    $manager->persist($expense2);
-    $manager->persist($expense3);
+        $manager->persist($expense1);
+        $manager->persist($expense2);
+        $manager->persist($expense3);
 
-    // 💾 Sauvegarde en base
-    $manager->flush();
-}
+        // Sauvegarde en base
+        $manager->flush();
+    }
 }

@@ -23,7 +23,8 @@ class ExpenseNoteService
         ExpenseNoteRepositoryInterface $expenseNoteRepository,
         UserRepositoryInterface        $userRepository,
         CompanyRepositoryInterface     $companyRepository
-    ) {
+    )
+    {
         $this->expenseNoteRepository = $expenseNoteRepository;
         $this->userRepository = $userRepository;
         $this->companyRepository = $companyRepository;
@@ -33,12 +34,13 @@ class ExpenseNoteService
      * 🔹 Créer une note de frais
      */
     public function createExpenseNote(
-        User             $user,
-        UuidInterface    $companyId,
+        User              $user,
+        UuidInterface     $companyId,
         DateTimeImmutable $date,
-        float            $amount,
-        string           $type
-    ): ExpenseNote {
+        float             $amount,
+        string            $type
+    ): ExpenseNote
+    {
         // Vérifier que la société existe
         $company = $this->companyRepository->findById($companyId);
         if (!$company) {
@@ -66,12 +68,13 @@ class ExpenseNoteService
      * 🔹 Mettre à jour une note de frais (seulement si elle appartient à l'utilisateur)
      */
     public function updateExpenseNote(
-        UuidInterface    $id,
+        UuidInterface     $id,
         DateTimeImmutable $date,
-        float            $amount,
-        string           $type,
-        User             $user
-    ): ?ExpenseNote {
+        float             $amount,
+        string            $type,
+        User              $user
+    ): ?ExpenseNote
+    {
         $expenseNote = $this->getExpenseNoteByIdAndUser($id, $user);
 
         if (!$expenseNote) {
