@@ -23,7 +23,6 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // 🔹 Création de deux utilisateurs
         $user1 = (new User())->initialize(
             "John",
             "Doe",
@@ -45,20 +44,17 @@ class AppFixtures extends Fixture
         $manager->persist($user1);
         $manager->persist($user2);
 
-        // 🔹 Création de plusieurs sociétés
         $company1 = new Company("Tech Corp");
         $company2 = new Company("Biz Solutions");
 
         $manager->persist($company1);
         $manager->persist($company2);
 
-        // 🔹 Associer les entreprises aux utilisateurs
         $user1->addCompany($company1);
         $user1->addCompany($company2);
 
-        $user2->addCompany($company2); // Jane n'a accès qu'à une seule entreprise
+        $user2->addCompany($company2);
 
-        // 🔹 Création de notes de frais pour chaque utilisateur
         $expense1 = new ExpenseNote(
             new DateTimeImmutable(),
             new Amount(75.50),
@@ -87,7 +83,6 @@ class AppFixtures extends Fixture
         $manager->persist($expense2);
         $manager->persist($expense3);
 
-        // Sauvegarde en base
         $manager->flush();
     }
 }

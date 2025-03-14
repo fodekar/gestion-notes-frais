@@ -44,13 +44,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: "users_companies")]
     private Collection $companies;
 
-    // **Constructeur vide pour Doctrine**
     public function __construct()
     {
         $this->companies = new ArrayCollection();
     }
 
-    // **Méthode d'initialisation complète**
     public function initialize(
         string            $firstName,
         string            $lastName,
@@ -60,7 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         array             $roles = ['ROLE_USER']
     ): self
     {
-        $this->id = Uuid::uuid4(); // Génération d'UUID
+        $this->id = Uuid::uuid4();
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
@@ -126,7 +124,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
     }
 
-    // **Gestion de la relation ManyToMany avec `Company`**
     public function getCompanies(): Collection
     {
         return $this->companies;

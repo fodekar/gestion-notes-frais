@@ -27,9 +27,9 @@ class Company
 
     public function __construct(string $name)
     {
-        $this->id = Uuid::uuid4(); // Génération automatique de l'UUID
+        $this->id = Uuid::uuid4();
         $this->name = $name;
-        $this->users = new ArrayCollection(); // Initialisation de la collection
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): UuidInterface
@@ -52,7 +52,7 @@ class Company
         $this->name = $name;
     }
 
-    // **Gestion de la relation avec User**
+
     public function getUsers(): Collection
     {
         return $this->users;
@@ -62,14 +62,14 @@ class Company
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->addCompany($this); // Assurer la bidirectionnalité
+            $user->addCompany($this);
         }
     }
 
     public function removeUser(User $user): void
     {
         if ($this->users->removeElement($user)) {
-            $user->removeCompany($this); // Assurer la bidirectionnalité
+            $user->removeCompany($this);
         }
     }
 }

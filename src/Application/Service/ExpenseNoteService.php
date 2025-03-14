@@ -30,9 +30,6 @@ class ExpenseNoteService
         $this->companyRepository = $companyRepository;
     }
 
-    /**
-     * 🔹 Créer une note de frais
-     */
     public function createExpenseNote(
         User              $user,
         UuidInterface     $companyId,
@@ -41,16 +38,13 @@ class ExpenseNoteService
         string            $type
     ): ExpenseNote
     {
-        // Vérifier que la société existe
         $company = $this->companyRepository->findById($companyId);
         if (!$company) {
             throw new InvalidArgumentException("Company not found.");
         }
 
-        // Valider le type
         $expenseType = new ExpenseType($type);
 
-        // Créer la note de frais
         $expenseNote = new ExpenseNote(
             $date,
             new Amount($amount),
@@ -64,9 +58,6 @@ class ExpenseNoteService
         return $expenseNote;
     }
 
-    /**
-     * 🔹 Mettre à jour une note de frais (seulement si elle appartient à l'utilisateur)
-     */
     public function updateExpenseNote(
         UuidInterface     $id,
         DateTimeImmutable $date,
@@ -81,10 +72,8 @@ class ExpenseNoteService
             return null;
         }
 
-        // Valider le type
         $expenseType = new ExpenseType($type);
 
-        // Mettre à jour les valeurs
         $expenseNote->update(
             $date,
             new Amount($amount),
@@ -96,26 +85,19 @@ class ExpenseNoteService
         return $expenseNote;
     }
 
-    /**
-     * 🔹 Récupérer toutes les notes de frais d'un utilisateur
-     */
+
     public function getExpensesForUser(User $user): array
     {
         return $this->expenseNoteRepository->findByUser($user);
     }
 
-    /**
-     * 🔹 Vérifier qu'une note de frais appartient bien à l'utilisateur
-     */
+
     public function getExpenseNoteByIdAndUser(UuidInterface $id, User $user): ?ExpenseNote
     {
         $expense = $this->expenseNoteRepository->findById($id);
         return ($expense && $expense->getUser()->getId()->toString() === $user->getId()->toString()) ? $expense : null;
     }
 
-    /**
-     * 🔹 Supprimer une note de frais (seulement si elle appartient à l'utilisateur)
-     */
     public function deleteExpenseNote(UuidInterface $id, User $user): bool
     {
         $expense = $this->getExpenseNoteByIdAndUser($id, $user);

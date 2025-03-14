@@ -96,7 +96,6 @@ class ExpenseNote
         return $this->company;
     }
 
-    // Méthodes pour mettre à jour la note de frais
     public function update(DateTimeImmutable $date, Amount $amount, ExpenseType $type): void
     {
         $this->date = $date;

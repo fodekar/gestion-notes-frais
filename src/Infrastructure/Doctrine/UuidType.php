@@ -9,7 +9,7 @@ use Ramsey\Uuid\UuidInterface;
 
 class UuidType extends GuidType
 {
-    const UUID = 'uuid'; // Nom du type personnalisé
+    const UUID = 'uuid';
 
     public function getName(): string
     {

@@ -20,7 +20,7 @@ use OpenApi\Annotations as OA;
 class ExpenseNoteController extends AbstractController
 {
     private ExpenseNoteService $expenseNoteService;
-    private Security $security; // Injection de Security pour récupérer l'utilisateur connecté
+    private Security $security;
 
     public function __construct(ExpenseNoteService $expenseNoteService, Security $security)
     {
@@ -188,7 +188,7 @@ class ExpenseNoteController extends AbstractController
             new \DateTimeImmutable($updateRequest->date),
             $updateRequest->amount,
             $updateRequest->type,
-            $user // Vérification du propriétaire
+            $user
         );
 
         if (!$expense) {

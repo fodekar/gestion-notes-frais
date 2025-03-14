@@ -21,7 +21,6 @@ class LogoutController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function logout(): JsonResponse
     {
-        // Supprimer le token de la session (pas nécessaire en JWT mais bonne pratique)
         $this->tokenStorage->setToken(null);
 
         return new JsonResponse(['message' => 'Successfully logged out.'], JsonResponse::HTTP_OK);

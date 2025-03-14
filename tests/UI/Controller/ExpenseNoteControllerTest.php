@@ -21,7 +21,6 @@ class ExpenseNoteControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
 
-        // 🔹 Effectuer un login pour récupérer le token
         $this->client->request('POST', '/api/login', [], [], [
             'CONTENT_TYPE' => 'application/json'
         ], json_encode([
@@ -33,33 +32,30 @@ class ExpenseNoteControllerTest extends WebTestCase
         self::$token = $data['token'] ?? '';
 
         if (!isset(self::$token)) {
-            throw new \Exception("❌ Erreur : Impossible de récupérer le token pour John.");
+            throw new \Exception("Erreur : Impossible de récupérer le token pour John.");
         }
 
-        // 🔹 Récupérer un User ID
         $entityManager = $this->client->getContainer()->get(EntityManagerInterface::class);
 
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => 'john.doe@example.com']);
         if ($user) {
             self::$userId = $user->getId()->toString();
         } else {
-            throw new \Exception("❌ Aucun utilisateur trouvé en base.");
+            throw new \Exception("Aucun utilisateur trouvé en base.");
         }
 
-        // 🔹 Récupérer une Company ID
         $company = $entityManager->getRepository(Company::class)->findOneBy([]);
         if ($company) {
             self::$companyId = $company->getId()->toString();
         } else {
-            throw new \Exception("❌ Aucune entreprise trouvée en base.");
+            throw new \Exception("Aucune entreprise trouvée en base.");
         }
 
-        // 🔹 Récupérer une note de frais existante de John Doe
         $expense = $entityManager->getRepository(ExpenseNote::class)->findOneBy(['user' => $user]);
         if ($expense) {
             self::$expenseIdUser1 = $expense->getId()->toString();
         } else {
-            throw new \Exception("❌ Aucune note de frais trouvée pour John.");
+            throw new \Exception("Aucune note de frais trouvée pour John.");
         }
     }
 
@@ -109,7 +105,7 @@ class ExpenseNoteControllerTest extends WebTestCase
         $token = $data['token'] ?? '';
 
         if (!isset($data['token'])) {
-            throw new \Exception("❌ Erreur : Impossible de récupérer le token pour Jane.");
+            throw new \Exception("Erreur : Impossible de récupérer le token pour Jane.");
         }
 
         // 🔹 Essayer d'accéder à une note de frais de John avec le token de Jane
@@ -133,16 +129,15 @@ class ExpenseNoteControllerTest extends WebTestCase
         ], json_encode([
             'date' => '2024-03-15',
             'amount' => 90.00,
-            'type' => 'conference' // ✅ Confirmer que ce type est maintenant autorisé
+            'type' => 'conference'
         ]));
 
-        // ✅ Vérifier que la mise à jour réussit (200 OK)
         $this->assertResponseStatusCodeSame(200);
         $this->assertJson($this->client->getResponse()->getContent());
 
         $data = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertEquals(90.00, $data['amount']);
-        $this->assertEquals('conference', $data['type']); // 🔥 Vérifier que la mise à jour fonctionne
+        $this->assertEquals('conference', $data['type']);
     }
 
     public function testForbiddenUpdateForOtherUserExpense(): void
@@ -159,10 +154,9 @@ class ExpenseNoteControllerTest extends WebTestCase
         $tokenJane = $data['token'] ?? '';
 
         if (!isset($data['token'])) {
-            throw new \Exception("❌ Erreur : Impossible de récupérer le token pour Jane.");
+            throw new \Exception("Erreur : Impossible de récupérer le token pour Jane.");
         }
 
-        // 🔹 Essayer de modifier la note de John avec le token de Jane
         $this->client->request('PUT', '/api/expenses/' . self::$expenseIdUser1, [], [], [
             'HTTP_AUTHORIZATION' => 'Bearer ' . $tokenJane,
             'CONTENT_TYPE' => 'application/json'
@@ -172,7 +166,6 @@ class ExpenseNoteControllerTest extends WebTestCase
             'type' => 'conference' // ✅ Vérifier avec un type valide
         ]));
 
-        // ✅ Vérifier que l'accès est interdit (403 Forbidden)
         $this->assertResponseStatusCodeSame(403);
         $this->assertJson($this->client->getResponse()->getContent());
 
@@ -182,7 +175,6 @@ class ExpenseNoteControllerTest extends WebTestCase
 
     public function testDeleteExpense(): void
     {
-        // 🔹 Créer une note de frais avant de la supprimer
         $this->client->request('POST', '/api/expenses', [], [], [
             'HTTP_AUTHORIZATION' => 'Bearer ' . self::$token,
             'CONTENT_TYPE' => 'application/json'
@@ -196,7 +188,6 @@ class ExpenseNoteControllerTest extends WebTestCase
         $data = json_decode($this->client->getResponse()->getContent(), true);
         $expenseId = $data['id'];
 
-        // 🔹 Supprimer cette note de frais
         $this->client->request('DELETE', "/api/expenses/$expenseId", [], [], [
             'HTTP_AUTHORIZATION' => 'Bearer ' . self::$token
         ]);

@@ -55,25 +55,21 @@ class AuthController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        // Vérifier la présence de tous les champs obligatoires
         if (!isset($data['firstName'], $data['lastName'], $data['email'], $data['password'], $data['birthDate'])) {
             return new JsonResponse(['error' => 'All fields are required'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
         try {
-            // Vérification du format d'email
+
             $email = new Email($data['email']);
 
-            // Vérifier si l'email est déjà utilisé
             $existingUser = $entityManager->getRepository(User::class)->findOneBy(['email' => $email->getValue()]);
             if ($existingUser) {
                 return new JsonResponse(['error' => 'Email already in use'], JsonResponse::HTTP_CONFLICT);
             }
 
-            // Hasher le mot de passe
             $hashedPassword = $passwordHasher->hashPassword(new User(), $data['password']);
 
-            // Création de l'utilisateur
             $user = (new User())->initialize(
                 $data['firstName'],
                 $data['lastName'],
@@ -82,7 +78,6 @@ class AuthController extends AbstractController
                 $hashedPassword
             );
 
-            // Associer l'utilisateur à une entreprise par défaut
             $company = $entityManager->getRepository(Company::class)->findOneBy(['name' => 'Default Company']);
             if (!$company) {
                 $company = new Company('Default Company');
@@ -90,7 +85,6 @@ class AuthController extends AbstractController
             }
             $user->addCompany($company);
 
-            // Sauvegarde en base
             $entityManager->persist($user);
             $entityManager->flush();
 
